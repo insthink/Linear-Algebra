@@ -1,7 +1,36 @@
+from ._global import EPSILON
+import math
+
+
 class Vector:
 
     def __init__(self, lst):
         self._values = list(lst)
+
+    @classmethod
+    def zero(cls, dim):
+        """
+        返回dim维度的零向量
+        :param dim:
+        :return:
+        """
+        return cls([0] * dim)
+
+    def norm(self):
+        """
+        向量取模
+        :return:
+        """
+        return math.sqrt(sum(e ** 2 for e in self))
+
+    def normalize(self):
+        """
+        归一化为单位向量
+        :return:
+        """
+        if self.norm() < EPSILON:
+            raise ZeroDivisionError("norm is zero, cannot normalize")
+        return 1 / self.norm() * Vector(self._values)
 
     def __add__(self, other):
         assert len(self) == len(other), "Error in adding. Length of vector must be the same"
@@ -26,6 +55,14 @@ class Vector:
         :return:
         """
         return Vector([k * e for e in self._values])
+
+    def __truediv__(self, k):
+        """
+        truediv是数量除法，区别于地板除, vector / k
+        :param k:
+        :return:
+        """
+        return (1 / k) * self
 
     def __pos__(self):
         return 1 * self

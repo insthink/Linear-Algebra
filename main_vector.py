@@ -13,3 +13,14 @@ if __name__ == '__main__':
     print(3 * vec)
     print(+vec)
     print(-vec)
+
+    print(Vector.zero(4))
+    print(vec.norm())
+
+    print(vec.normalize())
+
+    vec2 = Vector.zero(4)
+    try:
+        print(vec2.normalize())
+    except ZeroDivisionError:
+        print("cannot normalize zero vector")
